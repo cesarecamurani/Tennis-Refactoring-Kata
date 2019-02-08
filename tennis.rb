@@ -7,14 +7,13 @@ class TennisGame1
     @p1points = 0
     @p2points = 0
     @result = ""
-    @tempScore = 0
   end
 
   def won_point(playerName)
     playerName == "player1" ? @p1points += 1 : @p2points += 1
   end
 
-  def deuce
+  def deuce_condition
     @p1points == @p2points
   end
 
@@ -23,41 +22,14 @@ class TennisGame1
   end
 
   def score
-    if deuce()
+    if deuce_condition()
       deuce_print_out()
     elsif players_points_above_4()
-      points_difference_output()
+      points_difference_check()
     else
       calc_partial_score()
     end
     @result
-  end
-
-  def points_difference
-    @p1points-@p2points
-  end
-
-  def points_difference_output
-    p1_advantage?
-    p2_advantage?
-    p1_winner?
-    p2_winner?
-  end
-
-  def p1_advantage?
-    @result ="Advantage player1" if points_difference == 1
-  end
-
-  def p2_advantage?
-    @result ="Advantage player2" if points_difference == -1
-  end
-
-  def p1_winner?
-    @result ="Win for player1" if points_difference >= 2
-  end
-
-  def p2_winner?
-    @result ="Win for player2" if points_difference <= -2
   end
 
   def deuce_print_out
@@ -66,13 +38,31 @@ class TennisGame1
                 2 => "Thirty-All" }.fetch(@p1points, "Deuce")
   end
 
-  def partial_score_print_out()
-    @result += {
-        0 => "Love",
-        1 => "Fifteen",
-        2 => "Thirty",
-        3 => "Forty",
-        }[@temp_score]
+  def points_difference_check
+    p1_advantage_condition
+    p2_advantage_condition
+    p1_winner_condition
+    p2_winner_condition
+  end
+
+  def points_difference
+    @p1points-@p2points
+  end
+
+  def p1_advantage_condition
+    @result ="Advantage player1" if points_difference == 1
+  end
+
+  def p2_advantage_condition
+    @result ="Advantage player2" if points_difference == -1
+  end
+
+  def p1_winner_condition
+    @result ="Win for player1" if points_difference >= 2
+  end
+
+  def p2_winner_condition
+    @result ="Win for player2" if points_difference <= -2
   end
 
   def p1_partial
@@ -85,14 +75,21 @@ class TennisGame1
   end
 
   def calc_partial_score
-    (1..2).each do |i|
-      p1_partial() if (i == 1)
-      p2_partial() if (i == 2)
+    (1..2).each do |pos|
+      p1_partial() if (pos == 1)
+      p2_partial() if (pos == 2)
       partial_score_print_out()
     end
   end
 
-
+  def partial_score_print_out()
+    @result += {
+        0 => "Love",
+        1 => "Fifteen",
+        2 => "Thirty",
+        3 => "Forty",
+        }[@temp_score]
+  end
 
 
 
