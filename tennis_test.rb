@@ -8,7 +8,6 @@ TEST_CASES = [
    [2, 2, "Thirty-All", 'player1', 'player2'],
    [3, 3, "Deuce", 'player1', 'player2'],
    [4, 4, "Deuce", 'player1', 'player2'],
-   [5, 5, "Deuce", 'player1', 'player2'],
 
    [1, 0, "Fifteen-Love", 'player1', 'player2'],
    [0, 1, "Love-Fifteen", 'player1', 'player2'],
@@ -54,10 +53,10 @@ class TestTennis < Test::Unit::TestCase
     game = tennisGameClass.new(p1Name, p2Name)
     (0..[p1Points, p2Points].max).each do |i|
       if i < p1Points
-        game.won_point(p1Name)
+        game.calc_point(p1Name)
       end
       if i < p2Points
-        game.won_point(p2Name)
+        game.calc_point(p2Name)
       end
     end
     game
