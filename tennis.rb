@@ -86,11 +86,8 @@ class TennisGame1
 
   def calc_partial_score
     (1..2).each do |i|
-      if (i==1)
-        p1_partial()
-      else
-        p2_partial()
-      end
+      p1_partial() if (i == 1)
+      p2_partial() if (i == 2)
       partial_score_print_out()
     end
   end
