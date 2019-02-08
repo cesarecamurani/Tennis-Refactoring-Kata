@@ -50,8 +50,11 @@ class TennisGame1
         }[@tempScore]
   end
 
+  def points_difference
+    @p1points-@p2points
+  end
+
   def calc_points_difference
-    points_difference = @p1points-@p2points
     if (points_difference == 1)
       @result ="Advantage player1"
     elsif (points_difference == -1)
