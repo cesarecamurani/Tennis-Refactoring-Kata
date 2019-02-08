@@ -8,6 +8,7 @@ class TennisGame1
     @p2points = 0
     @result = ""
     @tempScore=0
+    # @minusResult = (@p1points-@p2points)
   end
 
   def won_point(playerName)
@@ -25,22 +26,26 @@ class TennisGame1
     elsif (@p1points>=4 or @p2points>=4)
       check_minusResult
     else
-      (1...3).each do |i|
-        if (i==1)
-          tempScore = @p1points
-        else
-          @result+="-"
-          tempScore = @p2points
-        end
-        @result += {
-            0 => "Love",
-            1 => "Fifteen",
-            2 => "Thirty",
-            3 => "Forty",
-        }[tempScore]
-      end
+      tempScore
     end
     @result
+  end
+end
+
+def tempScore
+  (1...3).each do |i|
+    if (i==1)
+      tempScore = @p1points
+    else
+      @result+="-"
+      tempScore = @p2points
+    end
+    @result += {
+        0 => "Love",
+        1 => "Fifteen",
+        2 => "Thirty",
+        3 => "Forty",
+    }[tempScore]
   end
 end
 
