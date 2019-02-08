@@ -8,6 +8,7 @@ TEST_CASES = [
    [2, 2, "Thirty-All", 'player1', 'player2'],
    [3, 3, "Deuce", 'player1', 'player2'],
    [4, 4, "Deuce", 'player1', 'player2'],
+   [5, 5, "Deuce", 'player1', 'player2'],
 
    [1, 0, "Fifteen-Love", 'player1', 'player2'],
    [0, 1, "Love-Fifteen", 'player1', 'player2'],
@@ -66,7 +67,7 @@ class TestTennis < Test::Unit::TestCase
     TEST_CASES.each do |testcase|
       (p1Points, p2Points, score, p1Name, p2Name) = testcase
       game = play_game(TennisGame1, p1Points, p2Points, p1Name, p2Name)
-      assert_equal(score, game.final_score())
+      assert_equal(score, game.score())
     end
   end
 #   def test_Score_Game2

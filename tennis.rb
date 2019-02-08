@@ -14,17 +14,6 @@ class TennisGame1
     playerName == "player1" ? @p1points += 1 : @p2points += 1
   end
 
-  def final_score
-    if deuce()
-      deuce_print_out()
-    elsif players_points_above_4()
-      calc_points_difference()
-    else
-      temporary_score()
-    end
-    @result
-  end
-
   def deuce
     @p1points == @p2points
   end
@@ -33,28 +22,22 @@ class TennisGame1
     @p1points >= 4 || @p2points >= 4
   end
 
-  def deuce_print_out
-    @result = {
-        0 => "Love-All",
-        1 => "Fifteen-All",
-        2 => "Thirty-All",
-      }.fetch(@p1points, "Deuce")
-  end
-
-  def temporary_score_print_out
-    @result += {
-        0 => "Love",
-        1 => "Fifteen",
-        2 => "Thirty",
-        3 => "Forty",
-        }[@tempScore]
+  def score
+    if deuce()
+      deuce_print_out()
+    elsif players_points_above_4()
+      points_difference_output()
+    else
+      calc_partial_score()
+    end
+    @result
   end
 
   def points_difference
     @p1points-@p2points
   end
 
-  def calc_points_difference
+  def points_difference_output
     p1_advantage?
     p2_advantage?
     p1_winner?
@@ -77,17 +60,40 @@ class TennisGame1
     @result ="Win for player2" if points_difference <= -2
   end
 
-  def temporary_score
-    (1...3).each do |i|
+  def deuce_print_out
+    @result = { 0 => "Love-All",
+                1 => "Fifteen-All",
+                2 => "Thirty-All" }.fetch(@p1points, "Deuce")
+  end
+
+  def partial_score_print_out()
+    @result += {
+        0 => "Love",
+        1 => "Fifteen",
+        2 => "Thirty",
+        3 => "Forty",
+        }[@temp_score]
+  end
+
+  def p1_partial
+    @temp_score = @p1points
+  end
+
+  def p2_partial
+    @result += "-"
+    @temp_score = @p2points
+  end
+
+  def calc_partial_score
+    (1..2).each do |i|
       if (i==1)
-        @tempScore = @p1points
+        p1_partial()
       else
-        @result += "-"
-        @tempScore = @p2points
+        p2_partial()
       end
-      temporary_score_print_out()
-      end
+      partial_score_print_out()
     end
+  end
 
 
 
