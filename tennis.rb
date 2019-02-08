@@ -17,19 +17,31 @@ class TennisGame1
     @p1points == @p2points
   end
 
-  def players_points_above_4
+  def players_points_above_four
     @p1points >= 4 || @p2points >= 4
   end
 
+  def partial_score_condition
+    (@p1points != @p2points) && (@p1points <= 3 && @p2points <= 3)
+  end
+
   def score
-    if deuce_condition()
-      deuce_print_out()
-    elsif players_points_above_4()
-      points_difference_check()
-    else
-      calc_partial_score()
-    end
+    deuce_check()
+    points_above_four_check()
+    partial_score_check()
     @result
+  end
+
+  def deuce_check
+    deuce_print_out() if deuce_condition()
+  end
+
+  def points_above_four_check
+    points_difference_check() if players_points_above_four()
+  end
+
+  def partial_score_check
+    calc_partial_score() if partial_score_condition()
   end
 
   def deuce_print_out
