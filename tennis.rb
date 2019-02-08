@@ -13,6 +13,41 @@ class TennisGame1
     playerName == "player1" ? @p1points += 1 : @p2points += 1
   end
 
+  def score
+    deuce_check
+    points_above_four_check
+    partial_score_check
+    print_score
+  end
+
+  def points_difference_check
+    p1_advantage_condition
+    p2_advantage_condition
+    p1_winner_condition
+    p2_winner_condition
+  end
+
+  def deuce_print_out
+    @result = { 0 => "Love-All",
+                1 => "Fifteen-All",
+                2 => "Thirty-All" }.fetch(@p1points, "Deuce")
+  end
+
+  def partial_score_print_out
+    @result += {
+        0 => "Love",
+        1 => "Fifteen",
+        2 => "Thirty",
+        3 => "Forty",
+        }[@temp_score]
+  end
+
+  private
+
+  def print_score
+    @result
+  end
+
   def deuce_condition
     @p1points == @p2points
   end
@@ -25,36 +60,16 @@ class TennisGame1
     (@p1points != @p2points) && (@p1points <= 3 && @p2points <= 3)
   end
 
-  def score
-    deuce_check()
-    points_above_four_check()
-    partial_score_check()
-    @result
-  end
-
   def deuce_check
-    deuce_print_out() if deuce_condition()
+    deuce_print_out if deuce_condition
   end
 
   def points_above_four_check
-    points_difference_check() if players_points_above_four()
+    points_difference_check if players_points_above_four
   end
 
   def partial_score_check
-    calc_partial_score() if partial_score_condition()
-  end
-
-  def deuce_print_out
-    @result = { 0 => "Love-All",
-                1 => "Fifteen-All",
-                2 => "Thirty-All" }.fetch(@p1points, "Deuce")
-  end
-
-  def points_difference_check
-    p1_advantage_condition
-    p2_advantage_condition
-    p1_winner_condition
-    p2_winner_condition
+    calc_partial_score if partial_score_condition
   end
 
   def points_difference
@@ -94,14 +109,6 @@ class TennisGame1
     end
   end
 
-  def partial_score_print_out()
-    @result += {
-        0 => "Love",
-        1 => "Fifteen",
-        2 => "Thirty",
-        3 => "Forty",
-        }[@temp_score]
-  end
 
 
 
