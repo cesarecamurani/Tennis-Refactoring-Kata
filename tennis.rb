@@ -27,16 +27,7 @@ class TennisGame1
           2 => "Thirty-All",
       }.fetch(@p1points, "Deuce")
     elsif (@p1points>=4 or @p2points>=4)
-      minusResult = @p1points-@p2points
-      if (minusResult==1)
-        @result ="Advantage player1"
-      elsif (minusResult ==-1)
-        @result ="Advantage player2"
-      elsif (minusResult>=2)
-        @result = "Win for player1"
-      else
-        @result ="Win for player2"
-      end
+      check_minusResult
     else
       (1...3).each do |i|
         if (i==1)
@@ -54,6 +45,19 @@ class TennisGame1
       end
     end
     @result
+  end
+end
+
+def check_minusResult
+  minusResult = @p1points-@p2points
+  if (minusResult==1)
+    @result ="Advantage player1"
+  elsif (minusResult ==-1)
+    @result ="Advantage player2"
+  elsif (minusResult>=2)
+    @result = "Win for player1"
+  else
+    @result ="Win for player2"
   end
 end
 
