@@ -7,34 +7,33 @@ class TennisGame1
     @p1points = 0
     @p2points = 0
     @result = ""
-    @tempScore=0
-  end
-
-  def pair
-    @p1points==@p2points
-  end
-
-  def points_above_4
-    @p1points>=4 || @p2points>=4
+    @tempScore = 0
   end
 
   def won_point(playerName)
     playerName == "player1" ? @p1points += 1 : @p2points += 1
   end
 
-  def score
-    if pair
-      deuce
-    elsif points_above_4
-      minusResult
+  def final_score
+    if deuce()
+      deuce_print_out()
+    elsif players_points_above_4()
+      calc_points_difference()
     else
-      tempScore
+      temporary_score()
     end
     @result
   end
 
-
   def deuce
+    @p1points == @p2points
+  end
+
+  def players_points_above_4
+    @p1points >= 4 || @p2points >= 4
+  end
+
+  def deuce_print_out
     @result = {
         0 => "Love-All",
         1 => "Fifteen-All",
@@ -42,35 +41,43 @@ class TennisGame1
       }.fetch(@p1points, "Deuce")
   end
 
-  def tempScore
+  def temporary_score_print_out
+    @result += {
+        0 => "Love",
+        1 => "Fifteen",
+        2 => "Thirty",
+        3 => "Forty",
+        }[@tempScore]
+  end
+
+  def calc_points_difference
+    points_difference = @p1points-@p2points
+    if (points_difference == 1)
+      @result ="Advantage player1"
+    elsif (points_difference == -1)
+      @result ="Advantage player2"
+    elsif (points_difference >= 2)
+      @result = "Win for player1"
+    elsif (points_difference <= -2)
+      @result = "Win for player2"
+    end
+  end
+
+  def temporary_score
     (1...3).each do |i|
       if (i==1)
-        tempScore = @p1points
+        @tempScore = @p1points
       else
-        @result+="-"
-        tempScore = @p2points
+        @result += "-"
+        @tempScore = @p2points
       end
-      @result += {
-          0 => "Love",
-          1 => "Fifteen",
-          2 => "Thirty",
-          3 => "Forty",
-          }[tempScore]
+      temporary_score_print_out()
       end
     end
 
-  def minusResult
-    minusResult = @p1points-@p2points
-    if (minusResult==1)
-      @result ="Advantage player1"
-    elsif (minusResult ==-1)
-      @result ="Advantage player2"
-    elsif (minusResult>=2)
-      @result = "Win for player1"
-    else
-      @result ="Win for player2"
-    end
-  end
+
+
+
 
 end
 
