@@ -16,13 +16,8 @@ class TennisGame1
   end
 
   def score
-
     if (@p1points==@p2points)
-      @result = {
-          0 => "Love-All",
-          1 => "Fifteen-All",
-          2 => "Thirty-All",
-      }.fetch(@p1points, "Deuce")
+      deuce
     elsif (@p1points>=4 or @p2points>=4)
       check_minusResult
     else
@@ -30,6 +25,14 @@ class TennisGame1
     end
     @result
   end
+end
+
+def deuce
+  @result = {
+      0 => "Love-All",
+      1 => "Fifteen-All",
+      2 => "Thirty-All",
+  }.fetch(@p1points, "Deuce")
 end
 
 def tempScore
