@@ -55,15 +55,26 @@ class TennisGame1
   end
 
   def calc_points_difference
-    if (points_difference == 1)
-      @result ="Advantage player1"
-    elsif (points_difference == -1)
-      @result ="Advantage player2"
-    elsif (points_difference >= 2)
-      @result = "Win for player1"
-    elsif (points_difference <= -2)
-      @result = "Win for player2"
-    end
+    p1_advantage?
+    p2_advantage?
+    p1_winner?
+    p2_winner?
+  end
+
+  def p1_advantage?
+    @result ="Advantage player1" if points_difference == 1
+  end
+
+  def p2_advantage?
+    @result ="Advantage player2" if points_difference == -1
+  end
+
+  def p1_winner?
+    @result ="Win for player1" if points_difference >= 2
+  end
+
+  def p2_winner?
+    @result ="Win for player2" if points_difference <= -2
   end
 
   def temporary_score
